@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{movie.details().Title}} | {{movie.details().imdbID}} {% endblock %}
+{% block content %}
+    <article>
+        <time datetime="{{ release.release_date().strftime('%Y-%m-%d') }}">
+            {{ release.release_date().strftime('%B %d %Y') }}
+        </time>
+        <h1 class="movie-article-title">
+            {{ movie.details().Title }}
+        </h1>
+        <p class="movie-list-sub-header">
+            <span class="tags be-lowercase">{{ movie.details().Genre.replace(', ', ' / ') }}</span>
+            {% if movie.details().imdbRating and movie.details().imdbRating != 'N/A' %}
+            - <span class="be-italic">Avrg of <span class="score be-bold">{{ movie.details().imdbRating }}</span></span>
+            {% endif %}
+        </p>
+        <p>
+            {{movie.details().Plot}}
+        </p>
+        <p><span class="be-bold">Rating:</span> {{movie.details().Rated}}</p>
+        <p><span class="be-bold">Actors:</span> {{movie.details().Actors}}</p>
+        <p><span class="be-bold">Directed By:</span> {{movie.details().Director}}</p>
+        <p><span class="be-bold">Written By:</span> {{movie.details().Writer}}</p>
+        <p><span class="be-bold">Production:</span> {{movie.details().Production}}</p>
+    </article>
+{% endblock %}

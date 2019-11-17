@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}index{% endblock %}
+{% block content %}
+  {% for date,movie_group in movies.items() %}
+    <section class="movie-list-date-group be-relative">
+      <time class="movie-list-date h1" datetime="{{ date.strftime('%Y-%m-%d') }}">
+        {{ date.strftime('%b %d') }}
+        <br />
+        <span>{{ date.strftime('%Y') }}</span>
+      </time>
+      {% for movie in movie_group %}
+        <section class="movie-list-block" id="movie-{{movie.details().imdbID}}" data-imdb-id="movie-{{movie.details().imdbID}}">
+          <h1 class="movie-list-heading">
+            <a href='/movie/{{movie.details().imdbID}}' title="{{ movie.details().Title }}">{{ movie.details().Title }}</a>
+          </h1>
+          <p class="movie-list-sub-header">
+            <span class="tags be-lowercase">{{ movie.details().Genre.replace(', ', ' / ') }}</span>
+            {% if movie.details().imdbRating and movie.details().imdbRating != 'N/A' %}
+              - <span class="be-italic">Avrg of <span class="score be-bold">{{ movie.details().imdbRating }}</span></span>
+            {% endif %}
+          </p>
+        </section>
+      {% endfor %}
+    </section>
+  {% endfor %}
+{% endblock %}
